@@ -1,0 +1,55 @@
+Dataset Overview:
+Total transactions: 1456
+Fraudulent transactions: 8 (0.55%)
+
+First 5 transactions:
+   TransactionID              TransactionDate   Amount  MerchantID TransactionType       Location  IsFraud
+0              1  2024-04-03 14:15:35.462794  4189.27         688          refund  San Antonio        0
+1              2  2024-03-19 13:20:35.462824  2659.71         109          refund       Dallas        0
+2              3  2024-01-08 10:08:35.462834   784.00         394        purchase      New York        0
+3              4  2024-04-13 23:50:35.462850  3514.40         944        purchase  Philadelphia        0
+4              5  2024-07-12 18:51:35.462858   369.07         475        purchase      Phoenix        0
+
+Model Evaluation:
+Accuracy: 0.9744
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.98      0.97      0.97       219
+           1       0.97      0.98      0.97       220
+
+    accuracy                           0.97       439
+   macro avg       0.97      0.97      0.97       439
+weighted avg       0.97      0.97      0.97       439
+
+
+Confusion Matrix:
+[[212   7]
+ [  4 216]]
+
+Sample Fraud Detection:
+
+Transaction 1 Analysis:
+Amount: $4500.00
+Type: Purchase
+Location: San Jose
+Fraud Prediction: Fraudulent
+Fraud Probability: 92.34%
+==================================================
+
+Transaction 2 Analysis:
+Amount: $120.50
+Type: Purchase
+Location: Chicago
+Fraud Prediction: Legitimate
+Fraud Probability: 3.21%
+==================================================
+
+Transaction 3 Analysis:
+Amount: $3200.00
+Type: Refund
+Location: New York
+Fraud Prediction: Legitimate
+Fraud Probability: 18.75%
+==================================================
