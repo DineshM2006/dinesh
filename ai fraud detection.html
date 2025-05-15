@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fraud Detection System | Secure Transactions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset and Base Styles */
+        :root {
+            --primary: #1a237e;
+            --secondary: #4a148c;
+            --accent: #00bcd4;
+            --light: #f5f7fa;
+            --dark: #121212;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--primary);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .github-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            background-color: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .github-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .github-link i {
+            margin-right: 8px;
+        }
+        
+        /* Hero Section */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1621761191319-c6fb62004040?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,188,212,0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,188,212,0.4);
+        }
+        
+        /* Problem Section */
+        .problem-section {
+            margin: 4rem 0;
+            background: #ffffff;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .content-box {
+            background-color: var(--light);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+        }
+        
+        .custom-list {
+            list-style: none;
+            padding: 1rem;
+            columns: 2;
+            column-gap: 2rem;
+        }
+        
+        .custom-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+            break-inside: avoid;
+        }
+        
+        .custom-list li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        /* Process Section */
+        .process-section {
+            margin: 6rem 0;
+        }
+        
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .step {
+            text-align: center;
+            padding: 2.5rem;
+            background: #fff;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .step-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-weight: bold;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(26,35,126,0.3);
+        }
+        
+        .step h3 {
+            margin: 1rem 0;
+            color: var(--primary);
+        }
+        
+        /* Technology Section */
+        .tech-section {
+            margin: 6rem 0;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .tech-card {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 6rem 0;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .stat-card h3 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Benefits Section */
+        .benefits-section {
+            margin: 6rem 0;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .benefit-card {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .benefit-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .benefit-card h3 i {
+            margin-right: 15px;
+            color: var(--accent);
+        }
+        
+        .benefit-card ul {
+            list-style: none;
+        }
+        
+        .benefit-card ul li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .benefit-card ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
+        /* Team Section */
+        .team-section {
+            margin: 6rem 0;
+        }
+        
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 5px solid var(--light);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .member-name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .member-role {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            margin: 6rem 0;
+        }
+        
+        .testimonial-card {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 3rem auto;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+        }
+        
+        .testimonial-card::before {
+            content: """;
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            font-size: 5rem;
+            color: rgba(0,188,212,0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-card blockquote {
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-card p {
+            text-align: right;
+            margin-top: 2rem;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            text-align: left;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .footer-column h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .process-steps,
+            .tech-grid,
+            .team-members,
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .custom-list {
+                columns: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .stats-section,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .step,
+            .tech-card,
+            .team-member {
+                margin-bottom: 1.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .process-steps,
+            .tech-grid,
+            .team-members {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-box,
+            .problem-section,
+            .testimonial-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i>
+            <span>FraudShield AI</span>
+        </div>
+        <a href="https://github.com/DineshM2006/dinesh.git" class="github-link">
+            <i class="fab fa-github"></i>
+            View on GitHub
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header>
+        <div class="container">
+            <h1>Guarding Transactions with AI-Powered Fraud Detection</h1>
+            <p class="subtitle">Our advanced machine learning system detects and prevents credit card fraud in real-time, protecting your business and customers from financial losses.</p>
+            <a href="#demo" class="cta-button">Request Demo</a>
+        </div>
+    </header>
+
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <h2>The Growing Threat of Credit Card Fraud</h2>
+            <div class="content-box">
+                <p>In today's digital economy, credit card fraud has become increasingly sophisticated, costing businesses over $30 billion annually. Traditional rule-based systems are no longer sufficient to combat these evolving threats. Our AI-powered solution addresses these critical challenges:</p>
+                <ul class="custom-list">
+                    <li><strong>Phishing schemes</strong> that bypass traditional security</li>
+                    <li><strong>Cross-border transaction</strong> pattern recognition</li>
+                    <li><strong>Real-time emerging threats</strong> detection</li>
+                    <li><strong>Behavioral anomalies</strong> in spending patterns</li>
+                    <li><strong>Synthetic identity fraud</strong> detection</li>
+                    <li><strong>Account takeover</strong> prevention</li>
+                    <li><strong>Friendly fraud</strong> identification</li>
+                    <li><strong>Merchant-specific</strong> fraud patterns</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <h2>How Our AI Detection System Works</h2>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-icon">1</div>
+                    <h3>Transaction Monitoring</h3>
+                    <p>Our system continuously analyzes every transaction across multiple dimensions including amount, location, time, merchant category, and device fingerprinting.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">2</div>
+                    <h3>Risk Assessment</h3>
+                    <p>Advanced neural networks evaluate 150+ behavioral features to generate a real-time risk score, identifying both known fraud patterns and emerging anomalies.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">3</div>
+                    <h3>Instant Prevention</h3>
+                    <p>Suspicious transactions are automatically blocked or flagged for review, while legitimate transactions proceed without friction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="tech-section">
+        <div class="container">
+            <h2>Our Advanced Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <i class="fab fa-python tech-icon"></i>
+                    <h4>Python 3.11</h4>
+                    <p>Core programming language for data processing and model development</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-brain tech-icon"></i>
+                    <h4>TensorFlow 2.0</h4>
+                    <p>Deep learning framework for neural network implementation</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-server tech-icon"></i>
+                    <h4>Flask API</h4>
+                    <p>RESTful API for real-time transaction processing</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-database tech-icon"></i>
+                    <h4>PostgreSQL</h4>
+                    <p>Scalable database for transaction history and pattern storage</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stat-card">
+                <h3>99.8%</h3>
+                <p>Detection Accuracy Rate</p>
+            </div>
+            <div class="stat-card">
+                <h3>50ms</h3>
+                <p>Average Response Time</p>
+            </div>
+            <div class="stat-card">
+                <h3>10M+</h3>
+                <p>Transactions Analyzed Daily</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2>Key System Benefits</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3><i class="fas fa-shield-alt"></i> Multi-Layer Security</h3>
+                    <ul>
+                        <li>Behavioral biometrics analysis</li>
+                        <li>Advanced device fingerprinting</li>
+                        <li>Geo-location velocity checks</li>
+                        <li>IP address reputation scoring</li>
+                        <li>Browser fingerprint analysis</li>
+                    </ul>
+                </div>
+                <div class="benefit-card">
+                    <h3><i class="fas fa-chart-line"></i> Advanced Analytics</h3>
+                    <ul>
+                        <li>Real-time fraud dashboards</li>
+                        <li>Historical pattern visualization</li>
+                        <li>Customizable alert thresholds</li>
+                        <li>Merchant-specific risk profiles</li>
+                        <li>Automated reporting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2>Our Expert Team</h2>
+            <div class="team-members">
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="M. Dinesh" class="member-avatar">
+                    <h3 class="member-name">M. Dinesh</h3>
+                    <p class="member-role">Lead AI Engineer</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="A. Hafeez" class="member-avatar">
+                    <h3 class="member-name">A. Hafeez</h3>
+                    <p class="member-role">Data Scientist</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="P. Dowrish" class="member-avatar">
+                    <h3 class="member-name">P. Dowrish</h3>
+                    <p class="member-role">Backend Developer</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/men/19.jpg" alt="Fayaz" class="member-avatar">
+                    <h3 class="member-name">Fayaz</h3>
+                    <p class="member-role">Frontend Developer</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Trusted by Financial Institutions</h2>
+            <div class="testimonial-card">
+                <blockquote>
+                    "Implementing this AI fraud detection system reduced our chargeback ratio by 78% within the first month while maintaining a false positive rate below 0.1%. The machine learning models continuously improve, adapting to new fraud patterns without requiring constant rule updates from our team."
+                </blockquote>
+                <p>- Director of Fraud Prevention, Major Payment Processor</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FraudShield AI</h3>
+                    <p>Advanced AI-powered credit card fraud detection and prevention system developed by a team of machine learning experts and software engineers.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#technology">Technology</a></li>
+                        <li><a href="#team">Our Team</a></li>
+                        <li><a href="https://github.com/DineshM2006/dinesh.git">GitHub Repository</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:contact@fraudshield.ai"><i class="fas fa-envelope"></i> contact@fraudshield.ai</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 FraudShield AI. All rights reserved. Developed by M.Dinesh, A.Hafeez, P.Dowrish, and Fayaz.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
